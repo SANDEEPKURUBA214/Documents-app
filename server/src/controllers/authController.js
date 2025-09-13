@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import sendEmail from "../utils/sendEmails.js";
 import generateToken from "../utils/generateToken.js";
 import Otp from "../models/otpModel.js"
+import  jwt  from 'jsonwebtoken';
 
 
 // 1️⃣ Register → send OTP
