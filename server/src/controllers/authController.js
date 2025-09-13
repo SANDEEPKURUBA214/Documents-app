@@ -8,13 +8,6 @@ import generateToken from "../utils/generateToken.js";
 import Otp from "../models/otpModel.js"
 
 
-//import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import crypto from "crypto";
-import User from "../models/user.js";
-import Otp from "../models/otpModel.js";
-import sendEmail from "../utils/sendEmails.js";
-
 // 1️⃣ Register → send OTP
 export const registerUser = async (req, res) => {
   try {
