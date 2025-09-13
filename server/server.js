@@ -12,14 +12,19 @@ dotenv.config();
 connectDB();
 console.log(process.env.GEMINI_API_KEY)
 const app = express();
-app.use(express.json());
-app.use(cookieParser());
 
 app.use(cors({
-  origin: ["http://localhost:5173","http://localhost:5173"], // allow both dev ports
+  origin: ["https://documents-app-three.vercel.app","http://localhost:5173","http://localhost:5173"], // allow both dev ports
   credentials: true,  // allow cookies/auth headers
 }));
 
+app.use(express.json());
+app.use(cookieParser());
+
+
+app.get("/", (req, res) => {
+  res.send("Backend is running ✅");
+});
 
 // Routes
 app.use("/api/auth", authRoutes);
