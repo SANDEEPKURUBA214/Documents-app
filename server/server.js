@@ -18,6 +18,25 @@ app.use(cors({
   credentials: true,  // allow cookies/auth headers
 }));
 
+
+import session from "express-session";
+
+app.use(
+  session({
+    name: "sid", // session cookie name
+    secret: process.env.SESSION_SECRET || "supersecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,                     // cannot be accessed by JS
+      secure: process.env.NODE_ENV === "production", // only HTTPS in prod
+      sameSite: "none",                    // allows cross-origin cookies
+      maxAge: 1000 * 60 * 60 * 24,        // 1 day
+    },
+  })
+);
+
+
 app.use(express.json());
 app.use(cookieParser());
 

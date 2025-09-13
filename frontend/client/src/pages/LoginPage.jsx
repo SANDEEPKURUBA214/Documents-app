@@ -18,12 +18,14 @@ export default function LoginPage() {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const res = await API.post(
-        "/auth/login",
-        { email, password },
-        { withCredentials: true }
-      );
-      login(res.data); // Only store user, not token
+      const res = await API.post("/auth/login", { email, password });
+
+      // Save token to localStorage
+      localStorage.setItem("token", res.data.token);
+
+      // Store user info in your auth store
+      login(res.data.user);
+
       showNotification("Login successful!", "success");
       navigate("/dashboard");
     } catch (err) {

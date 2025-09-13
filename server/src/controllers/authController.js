@@ -87,48 +87,25 @@ export const verifyOtp = async (req, res) => {
 
 
 // Login
-// ...existing code...
+
+
 export const loginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+  const { email, password } = req.body;
 
-    if (!user) {
-      return res.status(401).json({ message: "user not found" });
-    }
-
-    if (!user.isVerified) {
-      return res.status(403).json({ message: "Please verify your email before login" });
-    }
-
-    // 🔎 Debug logs
-
-
-    if (await user.matchPassword(password)) {
-      const token = generateToken(user._id, user.role);
-
-      // Set JWT as HTTP-only cookie
-      res.cookie("token", token, {
-        httpOnly: true,
-        sameSite: "lax", // Use "none" and secure: true if using HTTPS
-        secure: false,   // Set to true if using HTTPS
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
-      });
-
-      res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        message: "Login successful",
-      });
-    } else {
-      res.status(401).json({ message: "Invalid email or password" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  const user = await User.findOne({ email });
+  if (!user || !(await user.comparePassword(password))) {
+    return res.status(401).json({ message: "Invalid credentials" });
   }
+
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+
+  res.status(200).json({
+    user: { id: user._id, name: user.name, email: user.email },
+    token,
+  });
 };
+
+
 
 
 
