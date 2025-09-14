@@ -31,7 +31,7 @@ Full moderation controls
 🏗️ Tech Stack
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-Frontend (client):
+-----Frontend (client):
 
 React 19 + Vite
 
@@ -43,7 +43,7 @@ Axios, React Router DOM
 
 Linkify-react (URL parsing)
 
-Backend (server):
+-----Backend (server):
 
 Node.js + Express
 
@@ -57,4 +57,5 @@ CORS, Cookie-parser
 
 Nodemailer (email services)
 
-Google Generative AI (document enhancement, optional)
+
+
